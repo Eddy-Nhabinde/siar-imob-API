@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\pessoa;
+use App\Models\propriedade;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +15,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('arrendamentos', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->timestamp('acesso')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignIdFor(propriedade::class);
+            $table->foreignIdFor(pessoa::class);
+            $table->date('data_Inicio');
+            $table->string('duracao');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('arrendamentos');
     }
 };

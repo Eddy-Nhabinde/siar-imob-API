@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\bairro;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +14,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('propriedades', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->timestamp('acesso')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('descricao');
+            $table->string('tipo_id');
+            $table->foreignIdFor(bairro::class);
+            $table->string('foto');
+            $table->string('preco');
+            $table->string('dono_id');
+            $table->string('status_id');
             $table->timestamps();
         });
     }
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('propriedades');
     }
 };

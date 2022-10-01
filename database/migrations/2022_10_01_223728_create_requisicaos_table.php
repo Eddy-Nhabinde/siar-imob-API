@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\pessoa;
+use App\Models\propriedade;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +15,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('requisicaos', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->timestamp('acesso')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignIdFor(pessoa::class);
+            $table->foreignIdFor(propriedade::class);
+            $table->string('id_Dono');
+            $table->text('mensagem');
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('requisicaos');
     }
 };
