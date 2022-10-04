@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PessoaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,8 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-route::post('register', PessoaController::class . '@register');
+// route::post('register', PessoaController::class . '@register');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', AuthController::class . '@login');
+
+Route::group(['middleware' => ['apiJWT']], function () {
+    route::post('register', PessoaController::class . '@register');
 });
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
