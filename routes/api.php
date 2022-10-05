@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PessoaController;
+use App\Http\Controllers\PropriedadeController;
+use App\Models\propriedade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -19,8 +21,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', AuthController::class . '@login');
 
+//Registar um novo usuario
+Route::post('register', PessoaController::class . '@register');
+
+Route::get('all-props', PropriedadeController::class . '@getProps');
+
 Route::group(['middleware' => ['apiJWT']], function () {
-    route::post('register', PessoaController::class . '@register');
+
 });
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -30,6 +30,7 @@ class PessoaController extends Controller
                 'response' => 'O contacto introduzido ja foi registado'
             ], 409);
         } else {
+            
             $user = new userController();
             $idUSer = $user->store($request->email, $request->senha, $request->acesso);
             if ($idUSer == 'erro') {
