@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\PropriedadeController;
+use App\Http\Controllers\TiposDePropriedadeController;
 use App\Models\propriedade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,10 @@ Route::post('login', AuthController::class . '@login');
 Route::post('register', PessoaController::class . '@register');
 
 Route::get('all-props', PropriedadeController::class . '@getProps');
+
+Route::get('all-prop-types', TiposDePropriedadeController::class . '@getTipoProp');
+
+Route::post('save-prop-type', TiposDePropriedadeController::class . '@saveTipoProp');
 
 Route::group(['middleware' => ['apiJWT']], function () {
 
