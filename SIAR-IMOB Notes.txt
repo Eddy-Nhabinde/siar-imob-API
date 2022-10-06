@@ -1,0 +1,33 @@
+SIAR-IMOB notes
+
+os bairros e os tipos de propriedade podem ter os estados:
+   -> Visible por default
+   -> Deactivated
+
+as propriedads pode ter os estados:
+   -> Disponivel por default
+   -> Ocupado 
+   -> Reparacao
+   -> Desativado
+   -> Danificado
+
+
+Arrendamentos: Os estados do arrendamento sao: Em curso, Cancelado, Terminado e Removido
+
+Bairros, propriedades e tipos de propriedades: Partindo do principio de que tudo que se regista tem que se eliminar, 
+sempre que se fizer essa operacao em um dos objectos citados acima deve se verificar primero :
+
+Para Bairros: Verificar se nao existem propriedades registadas e que estejam ativas ou no historico de arrendamentos
+      se tiver props ativas, nao se elimina o bairro.
+      se nao tiver nenhum prop, elimina-se o bairro e o seu tipo associado
+    
+Para propriedades: Verificar se essas propriedades nao estao arrendadas
+         se  a propriedade em causa estiver arrendada e o arrendamento estiver em curso, nao se              
+         elimina a prop
+         se essa prop estiver no historico de arrendamento e n ao estiver em curso, desativa-se a 
+         prop
+         se nao estiver no historico de arrendamentos, elimina-se a prop
+
+Para tipos de propriedade: Verificar se nao existem propriedades registadas 
+          se o tipo tiver propriedades  ativas, nao se elimina o tipo
+          se nao tiver nenhuma prop, elimina-se o tipo

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('distrito_id');
+            $table->string('estado')->default('visible');
             $table->timestamps();
         });
     }
