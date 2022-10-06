@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BairroController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\PropriedadeController;
 use App\Http\Controllers\TiposDePropriedadeController;
@@ -32,6 +33,12 @@ Route::get('all-prop-types', TiposDePropriedadeController::class . '@getTipoProp
 Route::post('save-prop-type', TiposDePropriedadeController::class . '@saveTipoProp');
 
 Route::post('update-prop-type', TiposDePropriedadeController::class . '@editar');
+
+Route::get('get-bairros', BairroController::class . '@getBairro');
+
+Route::get('save-bairros', BairroController::class . '@saveBairro');
+
+Route::get('update-bairros', BairroController::class . '@editar');
 
 
 Route::group(['middleware' => ['apiJWT']], function () {
