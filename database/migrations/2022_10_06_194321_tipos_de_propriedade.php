@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\pessoa;
-use App\Models\propriedade;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('arrendamentos', function (Blueprint $table) {
+        Schema::create('tipos_De_propriedades', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(propriedade::class);
-            $table->foreignIdFor(pessoa::class);
-            $table->date('data_Inicio');
-            $table->string('duracao');
+            $table->string('nome');
+            $table->string('estado')->default('visible');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('arrendamentos');
+        Schema::dropIfExists('tipos_De_propriedades');
     }
 };

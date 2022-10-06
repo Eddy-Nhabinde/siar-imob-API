@@ -44,11 +44,11 @@ class TiposDePropriedadeController extends Controller
             $tipo = new tiposDePropriedade();
 
             try {
-                $tipo->nome = $request->nome;
+                $tipo->nome = strtoupper($request->nome);
                 $tipo->save();
             } catch (Exception $e) {
                 return response()->json([
-                    'response' => $e
+                    'response' => "Erro inesperado"
                 ], 500);
             }
         }
@@ -56,5 +56,28 @@ class TiposDePropriedadeController extends Controller
         return response()->json([
             'response' => 'Tipo salvo com sucesso'
         ], 200);
+    }
+
+    function editar(Request $request)
+    {
+        $response = 0;
+        try {
+            $response = DB::table('tipos_de_propriedades')
+                ->where('id', $request->id)
+                ->update([
+                    'nome' =>  strtoupper($request->nome)
+                ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'response' => "Erro inesperado"
+            ], 500);
+        }
+
+
+        if ($response == 1) {
+            return response()->json([
+                'response' => 'Alteracao feita com sucesso'
+            ], 200);
+        }
     }
 }

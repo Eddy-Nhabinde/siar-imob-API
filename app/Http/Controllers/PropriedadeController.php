@@ -63,4 +63,8 @@ class PropriedadeController extends Controller
             200
         );
     }
+
+    function  saveProp(){
+        
+    }
 }

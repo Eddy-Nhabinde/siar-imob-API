@@ -31,6 +31,9 @@ Route::get('all-prop-types', TiposDePropriedadeController::class . '@getTipoProp
 
 Route::post('save-prop-type', TiposDePropriedadeController::class . '@saveTipoProp');
 
+Route::post('update-prop-type', TiposDePropriedadeController::class . '@editar');
+
+
 Route::group(['middleware' => ['apiJWT']], function () {
 
 });
