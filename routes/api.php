@@ -44,6 +44,8 @@ Route::get('update-bairros', BairroController::class . '@editar');
 
 Route::post('save-arrendamento-details', ArrendamentoController::class . '@addArrendamento');
 
+Route::get('cancel-arrendamento/{arrendamento_id}', ArrendamentoController::class . '@cancelArrendamento');
+
 Route::get('my-situation/{id}', ArrendamentoController::class . '@sitView');
 
 Route::group(['middleware' => ['apiJWT']], function () {

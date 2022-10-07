@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\arrendamento;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ArrendamentoController extends Controller
 {
@@ -22,7 +23,7 @@ class ArrendamentoController extends Controller
                 $ARRENDAMENTO->save();
 
                 $ocupar = new PropriedadeController();
-                $ocupar->ocuparProp($request->prop_id);
+                $ocupar->ocuparProp($request->prop_id, 1);
             } catch (Exception $e) {
                 return response()->json([
                     'response' => "Erro inesperado"
@@ -36,5 +37,47 @@ class ArrendamentoController extends Controller
 
     function sitView($id)
     {
+        $situation  = 0;
+        try {
+            $situation = DB::table('arrendamentos')
+                ->select('arrendamentos.*')
+                ->where('pessoa_id', $id)
+                ->get();
+        } catch (Exception $e) {
+            return response()->json([
+                'response' => "Erro inesperado"
+            ], 500);
+        }
+        return response()->json(
+            $situation,
+            200
+        );
+    }
+
+    function cancelArrendamento($arrendamento_id)
+    {
+        try {
+            $idProp = DB::table('arrendamentos')
+                ->select('arrendamentos.propriedade_id')
+                ->where('id', $arrendamento_id)
+                ->get();
+
+            DB::table('arrendamentos')
+                ->where('id', $arrendamento_id)
+                ->update([
+                    'estado' =>  'Cancelado'
+                ]);
+
+            $ocupar = new PropriedadeController();
+            $ocupar->ocuparProp($idProp[0]->propriedade_id, 2);
+        } catch (Exception $e) {
+            return response()->json([
+                'response' => "Erro inesperado"
+            ], 500);
+        }
+
+        return response()->json([
+            'response' => "Cancelamento Feiro com sucesso"
+        ], 200);
     }
 }

@@ -73,14 +73,22 @@ class PropriedadeController extends Controller
         );
     }
 
-    function ocuparProp($prop_id)
+    function ocuparProp($prop_id, $operation)
     {
         try {
-            $response = DB::table('propriedades')
-                ->where('id', $prop_id)
-                ->update([
-                    'status_id' =>  2
-                ]);
+            if ($operation == 1) {
+                $response = DB::table('propriedades')
+                    ->where('id', $prop_id)
+                    ->update([
+                        'status_id' =>  2
+                    ]);
+            } else {
+                $response = DB::table('propriedades')
+                    ->where('id', $prop_id)
+                    ->update([
+                        'status_id' =>  1
+                    ]);
+            }
 
             return $response;
         } catch (Exception $e) {
