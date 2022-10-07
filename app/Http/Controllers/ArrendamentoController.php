@@ -80,4 +80,25 @@ class ArrendamentoController extends Controller
             'response' => "Cancelamento Feiro com sucesso"
         ], 200);
     }
+
+    function getArrendamentos($id)
+    {
+        $arrendamentos = 0;
+        try {
+            $arrendamentos = DB::table('arrendamentos')
+                ->join('propriedades', 'propriedades.id', '=', 'arrendamentos.propriedade_id')
+                ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
+                ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
+                ->join('pessoas', 'pessoas.id', '=', 'arrendamentos.pessoa_id')
+                ->select('bairros.nome as nomeBairro', 'propriedades.id as propID', 'tipos_de_propriedades.nome as nomeTipo', 'pessoas.nome as nomeInq', 'arrendamentos.duracao', 'arrendamentos.estado')
+                ->where('propriedades.dono_id', $id)
+                ->get();
+        } catch (Exception $e) {
+            return response()->json([
+                'response' => "Erro inesperado"
+            ], 500);
+        }
+
+        return response()->json($arrendamentos, 200);
+    }
 }

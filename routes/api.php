@@ -28,6 +28,7 @@ Route::post('me',  AuthController::class . '@me');
 //Registar um novo usuario
 Route::post('register', PessoaController::class . '@register');
 
+//Defaul estado = 1 (disponivel)
 Route::get('all-props/{estado?}', PropriedadeController::class . '@getProps');
 
 Route::get('all-prop-types', TiposDePropriedadeController::class . '@getTipoProp');
@@ -47,6 +48,9 @@ Route::post('save-arrendamento-details', ArrendamentoController::class . '@addAr
 Route::get('cancel-arrendamento/{arrendamento_id}', ArrendamentoController::class . '@cancelArrendamento');
 
 Route::get('my-situation/{id}', ArrendamentoController::class . '@sitView');
+
+Route::get('all-arrendamentos/{id}', ArrendamentoController::class . '@getArrendamentos');
+
 
 Route::group(['middleware' => ['apiJWT']], function () {
 });
