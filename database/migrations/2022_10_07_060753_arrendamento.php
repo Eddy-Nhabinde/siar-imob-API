@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(pessoa::class);
             $table->date('data_Inicio');
             $table->string('duracao');
+            $table->string('valor_pago');
             $table->string('estado')->default('Em curso');
             $table->timestamps();
         });

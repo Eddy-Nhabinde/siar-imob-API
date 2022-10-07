@@ -81,4 +81,8 @@ class BairroController extends Controller
             ], 200);
         }
     }
+
+    function deleteBairro($id){
+
+    }
 }
