@@ -102,3 +102,8 @@ class ArrendamentoController extends Controller
         return response()->json($arrendamentos, 200);
     }
 }
+
+
+
+
+

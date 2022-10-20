@@ -1,5 +1,9 @@
 SIAR-IMOB notes
 
+---------------------------------------------NIVEIS DE ACESSO---------------------------------------------
+Podem existir apenas 2 niveis de acesso: admin ou normal
+----------------------------------------------------------------------------------------------------------
+
 os bairros e os tipos de propriedade podem ter os estados:
    -> Visible por default
    -> Deactivated

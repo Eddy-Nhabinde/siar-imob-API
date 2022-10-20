@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('apelido');
             $table->string('contacto');
             $table->date('dataNasc');
+            $table->string('conta')->nullable();
             $table->timestamps();
         });
     }

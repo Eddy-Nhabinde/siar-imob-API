@@ -20,8 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// route::post('register', PessoaController::class . '@register');
-
 Route::post('login', AuthController::class . '@login');
 
 Route::post('me',  AuthController::class . '@me');
