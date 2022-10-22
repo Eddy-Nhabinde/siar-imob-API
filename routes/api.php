@@ -28,7 +28,7 @@ Route::post('me',  AuthController::class . '@me');
 Route::post('register', PessoaController::class . '@register');
 
 //Defaul estado = 1 (disponivel)
-Route::get('all-props/{estado?}', PropriedadeController::class . '@getProps');
+Route::post('all-props/{estado?}', PropriedadeController::class . '@getProps');
 
 Route::post('save-prop', PropriedadeController::class . '@saveProp');
 
@@ -60,9 +60,10 @@ Route::post('bairros', provinDistrict::class . '@getBairros');
 
 Route::get('tipos', provinDistrict::class . '@getTipo');
 
+Route::get('estados', provinDistrict::class . '@getState');
+
 Route::group(['middleware' => ['apiJWT']], function () {
 });
-
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

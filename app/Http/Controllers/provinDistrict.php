@@ -51,4 +51,14 @@ class provinDistrict extends Controller
             200
         );
     }
+
+    function getState()
+    {
+        $estado = DB::table('status')->select('status.*')->get();
+
+        return response()->json(
+            $estado,
+            200
+        );
+    }
 }
