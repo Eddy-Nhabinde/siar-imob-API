@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\propriedade;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -104,7 +105,35 @@ class PropriedadeController extends Controller
         }
     }
 
-    function  saveProp()
+    function  saveProp(Request $request)
     {
+        if ($request->has('image')) {
+            $image = $request->file('image');
+
+            $name = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->move('images/', $name);
+
+            $prop = new propriedade();
+
+            $prop->descricao = $request->Desc;
+            $prop->tipos_de_propriedade_id = $request->TipoValue;
+            $prop->bairro_id = $request->Bairro;
+            $prop->foto = $name;
+            $prop->preco = $request->Valor;
+            $prop->dono_id = '1';
+            $prop->status_id = '1';
+
+            try {
+                $prop->save();
+                return response()->json(
+                    'Propriedade registada com sucesso'
+                );
+            } catch (Exception $e) {
+                return response()->json([
+                    'error' => 'Email invalido'
+                ], 409);
+            }
+        }
     }
 }

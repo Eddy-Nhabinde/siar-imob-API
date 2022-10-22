@@ -30,6 +30,8 @@ Route::post('register', PessoaController::class . '@register');
 //Defaul estado = 1 (disponivel)
 Route::get('all-props/{estado?}', PropriedadeController::class . '@getProps');
 
+Route::post('save-prop', PropriedadeController::class . '@saveProp');
+
 Route::get('all-prop-types', TiposDePropriedadeController::class . '@getTipoProp');
 
 Route::post('save-prop-type', TiposDePropriedadeController::class . '@saveTipoProp');
@@ -55,6 +57,8 @@ Route::get('provinces', provinDistrict::class . '@getProvinces');
 Route::post('districts', provinDistrict::class . '@getDistrict');
 
 Route::post('bairros', provinDistrict::class . '@getBairros');
+
+Route::get('tipos', provinDistrict::class . '@getTipo');
 
 Route::group(['middleware' => ['apiJWT']], function () {
 });

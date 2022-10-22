@@ -29,10 +29,25 @@ class provinDistrict extends Controller
 
     function getBairros(Request $request)
     {
-        $distrito = DB::table('bairros')->select('bairros.*')->where('distrito_id', $request->distrito)->get();
+        $bairro = 0;
+        if ($request->distrito != "undefined") {
+            $bairro = DB::table('bairros')->select('bairros.*')->where('distrito_id', $request->distrito)->get();
+        } else {
+            $bairro = DB::table('bairros')->select('bairros.*')->get();
+        }
 
         return response()->json(
-            $distrito,
+            $bairro,
+            200
+        );
+    }
+
+    function getTipo()
+    {
+        $Tipo = DB::table('tipos_de_propriedades')->select('tipos_de_propriedades.*')->get();
+
+        return response()->json(
+            $Tipo,
             200
         );
     }
