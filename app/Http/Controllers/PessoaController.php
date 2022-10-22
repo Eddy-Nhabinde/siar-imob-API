@@ -17,6 +17,7 @@ class PessoaController extends Controller
             $request->email => 'email:rfc'
         ]);
         $dateOfBirth = $request->dataNasc;
+        
         if (Carbon::parse($dateOfBirth)->age < 18) {
             return response()->json([
                 'error' => 'O sistema e para maiores de 18 anos'

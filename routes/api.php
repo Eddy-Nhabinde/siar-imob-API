@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BairroController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\PropriedadeController;
+use App\Http\Controllers\provinDistrict;
 use App\Http\Controllers\TiposDePropriedadeController;
 use App\Models\propriedade;
 use Illuminate\Http\Request;
@@ -49,6 +50,11 @@ Route::get('my-situation/{id}', ArrendamentoController::class . '@sitView');
 
 Route::get('all-arrendamentos/{id}', ArrendamentoController::class . '@getArrendamentos');
 
+Route::get('provinces', provinDistrict::class . '@getProvinces');
+
+Route::post('districts', provinDistrict::class . '@getDistrict');
+
+Route::post('bairros', provinDistrict::class . '@getBairros');
 
 Route::group(['middleware' => ['apiJWT']], function () {
 });
