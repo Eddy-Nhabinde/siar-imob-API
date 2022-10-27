@@ -38,9 +38,9 @@ Route::post('save-prop-type', TiposDePropriedadeController::class . '@saveTipoPr
 
 Route::post('update-prop-type', TiposDePropriedadeController::class . '@editar');
 
-Route::get('get-bairros', BairroController::class . '@getBairro');
+Route::get('bairros', BairroController::class . '@getBairro');
 
-Route::get('save-bairros', BairroController::class . '@saveBairro');
+Route::post('save-bairros', BairroController::class . '@saveBairro');
 
 Route::get('update-bairros', BairroController::class . '@editar');
 
@@ -54,9 +54,12 @@ Route::get('all-arrendamentos/{id}', ArrendamentoController::class . '@getArrend
 
 Route::get('provinces', provinDistrict::class . '@getProvinces');
 
-Route::post('districts', provinDistrict::class . '@getDistrict');
+Route::post('provinces-save', provinDistrict::class . '@saveProvince');
 
-Route::post('bairros', provinDistrict::class . '@getBairros');
+Route::post('districts', provinDistrict::class . '@getDistrict'); 
+
+Route::post('districts-save', provinDistrict::class . '@saveDistrict');
+
 
 Route::get('tipos', provinDistrict::class . '@getTipo');
 
@@ -64,6 +67,7 @@ Route::get('estados', provinDistrict::class . '@getState');
 
 Route::group(['middleware' => ['apiJWT']], function () {
 });
+
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

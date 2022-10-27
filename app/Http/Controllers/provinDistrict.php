@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,9 +18,28 @@ class provinDistrict extends Controller
         );
     }
 
+    function saveProvince(Request $request)
+    {
+        try {
+            DB::table('provincia')->insert([
+                'nome' => $request->nome
+            ]);
+
+            return response()->json(
+                ['response' => 'Provincia Registada Com Sucesso'],
+                200
+            );
+        } catch (Exception $e) {
+        }
+    }
+
     function getDistrict(Request $request)
     {
-        $distrito = DB::table('distrito')->select('distrito.*')->where('provincia_id', $request->province)->get();
+        if ($request->province != 'undefined') {
+            $distrito = DB::table('distrito')->select('distrito.*')->where('provincia_id', $request->province)->get();
+        } else {
+            $distrito = DB::table('distrito')->select('distrito.*')->get();
+        }
 
         return response()->json(
             $distrito,
@@ -27,20 +47,22 @@ class provinDistrict extends Controller
         );
     }
 
-    function getBairros(Request $request)
+    function saveDistrict(Request $request)
     {
-        $bairro = 0;
-        if ($request->distrito != "undefined") {
-            $bairro = DB::table('bairros')->select('bairros.*')->where('distrito_id', $request->distrito)->get();
-        } else {
-            $bairro = DB::table('bairros')->select('bairros.*')->get();
-        }
+        try {
+            DB::table('distrito')->insert([
+                'nome' => $request->nome,
+                'provincia_id'=>$request->provincia_id
+            ]);
 
-        return response()->json(
-            $bairro,
-            200
-        );
+            return response()->json(
+                ['response' => 'Distrito Registado Com Sucesso'],
+                200
+            );
+        } catch (Exception $e) {
+        }
     }
+
 
     function getTipo()
     {
@@ -51,6 +73,11 @@ class provinDistrict extends Controller
             200
         );
     }
+
+    function saveTipo(Request $request)
+    {
+    }
+
 
     function getState()
     {

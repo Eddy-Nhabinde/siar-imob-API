@@ -12,15 +12,10 @@ class BairroController extends Controller
     function getBairro(Request $request)
     {
         $bairro = 0;
-        try {
-            $bairro  =  DB::table('bairros')
-                ->select('bairros.*')
-                ->get();
-        } catch (Exception $e) {
-            return response()->json([
-                'response' => 'Erro inesperado',
-                500
-            ]);
+        if ($request->distrito != "undefined") {
+            $bairro = DB::table('bairros')->select('bairros.*')->where('distrito_id', $request->distrito)->get();
+        } else {
+            $bairro = DB::table('bairros')->select('bairros.*')->get();
         }
 
         return response()->json(
