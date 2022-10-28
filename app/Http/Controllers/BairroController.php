@@ -14,6 +14,12 @@ class BairroController extends Controller
         $bairro = 0;
         if ($request->distrito != "undefined") {
             $bairro = DB::table('bairros')->select('bairros.*')->where('distrito_id', $request->distrito)->get();
+        } else if ($request->param == 1) {
+            $bairro = DB::table('bairros')
+                ->join('distrito', 'distrito.id', '=', 'bairros.distrito_id')
+                ->join('provincia', 'provincia.id', '=', 'distrito.provincia_id')
+                ->select('bairros.nome', 'distrito.nome as dname', 'provincia.nome as pname')
+                ->get();
         } else {
             $bairro = DB::table('bairros')->select('bairros.*')->get();
         }
@@ -77,7 +83,7 @@ class BairroController extends Controller
         }
     }
 
-    function deleteBairro($id){
-
+    function deleteBairro($id)
+    {
     }
 }

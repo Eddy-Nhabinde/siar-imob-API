@@ -8,9 +8,18 @@ use Illuminate\Support\Facades\DB;
 
 class provinDistrict extends Controller
 {
-    function getProvinces()
+    function getProvinces($count = 0)
     {
-        $provinces = DB::table('provincia')->select('provincia.*')->get();
+        $provinces  = 0;
+        if ($count != 0) {
+            $provinces = DB::table('provincia')
+                ->select(array('provincia.nome', DB::raw('COUNT(distrito.id) as totalDistrito')))
+                ->leftJoin('distrito', 'distrito.provincia_id', '=', 'provincia.id')
+                ->groupBy('provincia.nome')
+                ->get();
+        } else {
+            $provinces = DB::table('provincia')->select('provincia.*')->get();
+        }
 
         return response()->json(
             $provinces,
@@ -37,6 +46,12 @@ class provinDistrict extends Controller
     {
         if ($request->province != 'undefined') {
             $distrito = DB::table('distrito')->select('distrito.*')->where('provincia_id', $request->province)->get();
+        } else if ($request->param == 1) {
+            $distrito = DB::table('distrito')
+                ->select(array('distrito.nome', DB::raw('COUNT(bairros.id) as totalBairross')))
+                ->leftJoin('bairros', 'bairros.distrito_id', '=', 'distrito.id')
+                ->groupBy('distrito.nome')
+                ->get();
         } else {
             $distrito = DB::table('distrito')->select('distrito.*')->get();
         }
@@ -52,7 +67,7 @@ class provinDistrict extends Controller
         try {
             DB::table('distrito')->insert([
                 'nome' => $request->nome,
-                'provincia_id'=>$request->provincia_id
+                'provincia_id' => $request->provincia_id
             ]);
 
             return response()->json(
@@ -63,20 +78,6 @@ class provinDistrict extends Controller
         }
     }
 
-
-    function getTipo()
-    {
-        $Tipo = DB::table('tipos_de_propriedades')->select('tipos_de_propriedades.*')->get();
-
-        return response()->json(
-            $Tipo,
-            200
-        );
-    }
-
-    function saveTipo(Request $request)
-    {
-    }
 
 
     function getState()

@@ -32,13 +32,13 @@ Route::post('all-props/{estado?}', PropriedadeController::class . '@getProps');
 
 Route::post('save-prop', PropriedadeController::class . '@saveProp');
 
-Route::get('all-prop-types', TiposDePropriedadeController::class . '@getTipoProp');
+Route::get('tipos/{count?}', TiposDePropriedadeController::class . '@getTipoProp');
 
 Route::post('save-prop-type', TiposDePropriedadeController::class . '@saveTipoProp');
 
 Route::post('update-prop-type', TiposDePropriedadeController::class . '@editar');
 
-Route::get('bairros', BairroController::class . '@getBairro');
+Route::post('bairros', BairroController::class . '@getBairro');
 
 Route::post('save-bairros', BairroController::class . '@saveBairro');
 
@@ -52,16 +52,13 @@ Route::get('my-situation/{id}', ArrendamentoController::class . '@sitView');
 
 Route::get('all-arrendamentos/{id}', ArrendamentoController::class . '@getArrendamentos');
 
-Route::get('provinces', provinDistrict::class . '@getProvinces');
+Route::get('provinces/{count?}', provinDistrict::class . '@getProvinces');
 
 Route::post('provinces-save', provinDistrict::class . '@saveProvince');
 
-Route::post('districts', provinDistrict::class . '@getDistrict'); 
+Route::post('districts', provinDistrict::class . '@getDistrict');
 
 Route::post('districts-save', provinDistrict::class . '@saveDistrict');
-
-
-Route::get('tipos', provinDistrict::class . '@getTipo');
 
 Route::get('estados', provinDistrict::class . '@getState');
 

@@ -9,13 +9,21 @@ use Illuminate\Support\Facades\DB;
 
 class TiposDePropriedadeController extends Controller
 {
-    function getTipoProp()
+    function getTipoProp($count = 0)
     {
         $tipos = 0;
         try {
-            $tipos  =  DB::table('tipos_de_propriedades')
-                ->select('tipos_de_propriedades.*')
-                ->get();
+            if ($count > 0) {
+                $tipos = DB::table('tipos_de_propriedades')
+                    ->select(array('tipos_de_propriedades.nome', DB::raw('COUNT(propriedades.id) as totalCasas')))
+                    ->leftJoin('propriedades', 'propriedades.tipos_de_propriedade_id', '=', 'tipos_de_propriedades.id')
+                    ->groupBy('tipos_de_propriedades.nome')
+                    ->get();
+            } else {
+                $tipos  =  DB::table('tipos_de_propriedades')
+                    ->select('tipos_de_propriedades.*')
+                    ->get();
+            }
         } catch (Exception $e) {
             return response()->json([
                 'response' => 'Erro inesperado',
