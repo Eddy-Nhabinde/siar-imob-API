@@ -48,9 +48,11 @@ class provinDistrict extends Controller
             $distrito = DB::table('distrito')->select('distrito.*')->where('provincia_id', $request->province)->get();
         } else if ($request->param == 1) {
             $distrito = DB::table('distrito')
-                ->select(array('distrito.nome', DB::raw('COUNT(bairros.id) as totalBairross')))
+                ->select(array('distrito.nome', DB::raw('COUNT(bairros.id) as totalBairross'),'provincia.nome as pname'))
                 ->leftJoin('bairros', 'bairros.distrito_id', '=', 'distrito.id')
+                ->join('provincia', 'provincia.id', '=', 'distrito.provincia_id')
                 ->groupBy('distrito.nome')
+                ->groupBy('provincia.nome')
                 ->get();
         } else {
             $distrito = DB::table('distrito')->select('distrito.*')->get();

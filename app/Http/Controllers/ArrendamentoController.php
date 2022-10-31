@@ -90,7 +90,7 @@ class ArrendamentoController extends Controller
                 ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
                 ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
                 ->join('pessoas', 'pessoas.id', '=', 'arrendamentos.pessoa_id')
-                ->select('bairros.nome as nomeBairro', 'propriedades.id as propID', 'tipos_de_propriedades.nome as nomeTipo', 'pessoas.nome as nomeInq', 'arrendamentos.duracao', 'arrendamentos.estado')
+                ->select('bairros.nome as nomeBairro', 'propriedades.id as propID', 'pessoas.contacto', 'pessoas.nome as nomeInq','pessoas.apelido',  'arrendamentos.duracao', 'arrendamentos.estado')
                 ->where('propriedades.dono_id', $id)
                 ->get();
         } catch (Exception $e) {

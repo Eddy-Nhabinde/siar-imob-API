@@ -84,8 +84,9 @@ class PropriedadeController extends Controller
         } else {
             $props = DB::table('propriedades')
                 ->join('bairros',  'bairros.id', '=', 'propriedades.bairro_id')
+                ->join('status','status.id','=','propriedades.status_id')
                 ->join('tipos_de_propriedades','tipos_de_propriedades.id','=','propriedades.tipos_de_propriedade_id')
-                ->select('propriedades.*', 'bairros.nome', 'tipos_de_propriedades.nome as tipoNome')
+                ->select('propriedades.*', 'bairros.nome', 'tipos_de_propriedades.nome as tipoNome','status.nome as status')
                 ->where('status_id', $estado)
                 ->where('dono_id', $request->dono_id)
                 ->get();
@@ -121,6 +122,7 @@ class PropriedadeController extends Controller
             return 500;
         }
     }
+
 
     function  saveProp(Request $request)
     {

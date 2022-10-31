@@ -16,9 +16,13 @@ class BairroController extends Controller
             $bairro = DB::table('bairros')->select('bairros.*')->where('distrito_id', $request->distrito)->get();
         } else if ($request->param == 1) {
             $bairro = DB::table('bairros')
+                ->select(array('bairros.nome', 'distrito.nome as dname', 'provincia.nome as pname', DB::raw('COUNT(propriedades.id) as totalProps')))
                 ->join('distrito', 'distrito.id', '=', 'bairros.distrito_id')
                 ->join('provincia', 'provincia.id', '=', 'distrito.provincia_id')
-                ->select('bairros.nome', 'distrito.nome as dname', 'provincia.nome as pname')
+                ->leftJoin('propriedades', 'propriedades.bairro_id', '=', 'bairros.id')
+                ->groupBy('bairros.nome')
+                ->groupBy('distrito.nome')
+                ->groupBy('provincia.nome')
                 ->get();
         } else {
             $bairro = DB::table('bairros')->select('bairros.*')->get();
