@@ -14,7 +14,7 @@ class PessoaController extends Controller
     {
 
         $validated = $request->validate([
-            $request->email => 'email:rfc'
+            $request->email => 'email'
         ]);
         $dateOfBirth = $request->dataNasc;
         

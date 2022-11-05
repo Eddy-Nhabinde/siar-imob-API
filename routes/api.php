@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArrendamentoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BairroController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\PropriedadeController;
 use App\Http\Controllers\provinDistrict;
@@ -61,6 +62,8 @@ Route::post('districts', provinDistrict::class . '@getDistrict');
 Route::post('districts-save', provinDistrict::class . '@saveDistrict');
 
 Route::get('estados', provinDistrict::class . '@getState');
+
+Route::post('request-house', MailController::class . '@newRequest');
 
 Route::group(['middleware' => ['apiJWT']], function () {
 });

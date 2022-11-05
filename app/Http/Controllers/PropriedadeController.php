@@ -20,7 +20,7 @@ class PropriedadeController extends Controller
                 ->select('propriedades.*', 'bairros.nome', 'tipos_de_propriedades.nome as tipoNome')
                 ->where('bairro_id', $request->bairro)
                 ->where('status_id', $estado)
-                ->where('dono_id', $request->dono_id)
+                // ->where('dono_id', $request->dono_id)
                 ->get();
         } else if (!$request->bairro && $request->tipo && !$request->preco) {
             $props = DB::table('propriedades')
@@ -29,7 +29,7 @@ class PropriedadeController extends Controller
                 ->select('propriedades.*', 'bairros.nome', 'tipos_de_propriedades.nome as tipoNome')
                 ->where('tipos_de_propriedade_id', $request->tipo)
                 ->where('status_id', $estado)
-                ->where('dono_id', $request->dono_id)
+                // ->where('dono_id', $request->dono_id)
                 ->get();
         } else if (!$request->bairro && !$request->tipo && $request->preco) {
             $props = DB::table('propriedades')
@@ -38,7 +38,7 @@ class PropriedadeController extends Controller
                 ->select('propriedades.*', 'bairros.nome', 'tipos_de_propriedades.nome as tipoNome')
                 ->whereBetween('preco', [0, $request->preco])
                 ->where('status_id', $estado)
-                ->where('dono_id', $request->dono_id)
+                // ->where('dono_id', $request->dono_id)
                 ->get();
         } else if ($request->bairro && $request->tipo && !$request->preco) {
             $props = DB::table('propriedades')
@@ -48,7 +48,7 @@ class PropriedadeController extends Controller
                 ->where('bairro_id', $request->bairro)
                 ->where('tipos_de_propriedade_id', $request->tipo)
                 ->where('status_id', $estado)
-                ->where('dono_id', $request->dono_id)
+                // ->where('dono_id', $request->dono_id)
                 ->get();
         } else if ($request->bairro && !$request->tipo && $request->preco) {
             $props = DB::table('propriedades')
@@ -58,7 +58,7 @@ class PropriedadeController extends Controller
                 ->where('bairro_id', $request->bairro)
                 ->whereBetween('preco', [0, $request->preco])
                 ->where('status_id', $estado)
-                ->where('dono_id', $request->dono_id)
+                // ->where('dono_id', $request->dono_id)
                 ->get();
         } else if (!$request->bairro && $request->tipo && $request->preco) {
             $props = DB::table('propriedades')
@@ -68,7 +68,7 @@ class PropriedadeController extends Controller
                 ->whereBetween('preco', [0, $request->preco])
                 ->where('tipos_de_propriedade_id', $request->tipo)
                 ->where('status_id', $estado)
-                ->where('dono_id', $request->dono_id)
+                // ->where('dono_id', $request->dono_id)
                 ->get();
         } else if ($request->bairro && $request->tipo && $request->preco) {
             $props = DB::table('propriedades')
@@ -78,7 +78,7 @@ class PropriedadeController extends Controller
                 ->whereBetween('preco', [0, $request->preco])
                 ->where('tipos_de_propriedade_id', $request->tipo)
                 ->where('status_id', $estado)
-                ->where('dono_id', $request->dono_id)
+                // ->where('dono_id', $request->dono_id)
                 ->where('bairro_id', $request->bairro)
                 ->get();
         } else {
@@ -88,7 +88,7 @@ class PropriedadeController extends Controller
                 ->join('tipos_de_propriedades','tipos_de_propriedades.id','=','propriedades.tipos_de_propriedade_id')
                 ->select('propriedades.*', 'bairros.nome', 'tipos_de_propriedades.nome as tipoNome','status.nome as status')
                 ->where('status_id', $estado)
-                ->where('dono_id', $request->dono_id)
+                // ->where('dono_id', $request->dono_id)
                 ->get();
         }
 
