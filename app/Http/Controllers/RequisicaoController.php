@@ -2,9 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\requisicao;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RequisicaoController extends Controller
 {
-    //
+    function create($user_id, $casa_id, $dono_id)
+    {
+        try {
+            $myRequest = DB::table('requisicaos')
+                ->select('requisicaos.*')
+                ->where('pessoa_id', $user_id)
+                ->where('propriedade_id', $casa_id)
+                ->get();
+            if (sizeof($myRequest) > 0) {
+                return 1;
+            } else {
+                requisicao::create([
+                    'pessoa_id' => $user_id,
+                    'propriedade_id' => $casa_id,
+                    'id_Dono' => $dono_id,
+                    'mensagem' => '',
+                    'status' => '1'
+                ]);
+            }
+            return 2;
+        } catch (Exception $e) {
+            dd($e);
+        }
+    }
+
+    function getRequets(Request $request)
+    {
+        try {
+            $allRequest = DB::table('requisicaos')
+                ->join('propriedades', 'propriedades.id', '=', 'requisicaos.propriedade_id')
+                ->join('pessoas', 'pessoas.user_id', '=', 'requisicaos.pessoa_id')
+                ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
+                ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
+                ->select('pessoas.nome', 'pessoas.apelido', 'propriedades.foto', 'propriedades.preco','bairros.nome as nomeBairro','tipos_de_propriedades.nome as nomeTipo')
+                ->where('id_Dono', $request->dono_id)
+                ->get();
+
+            return response([$allRequest]);
+        } catch (Exception $e) {
+            dd($e);
+        }
+    }
 }

@@ -7,9 +7,8 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\PropriedadeController;
 use App\Http\Controllers\provinDistrict;
+use App\Http\Controllers\RequisicaoController;
 use App\Http\Controllers\TiposDePropriedadeController;
-use App\Models\propriedade;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +61,8 @@ Route::post('districts', provinDistrict::class . '@getDistrict');
 Route::post('districts-save', provinDistrict::class . '@saveDistrict');
 
 Route::get('estados', provinDistrict::class . '@getState');
+
+Route::post('/all-requests', RequisicaoController::class . '@getRequets');
 
 Route::post('request-house', MailController::class . '@newRequest');
 

@@ -13,6 +13,9 @@ class MailController extends Controller
         $Ucontroller =  new userController();
         $data = $Ucontroller->getRequestOwnerData($request->inquilino);
 
+        $req = new RequisicaoController();
+        $saveRequest = $req->create($request->inquilino, $request->casa_id, $request->dono_id);
+
         $email_data = [
             'recipient' => $Ucontroller->getEmail($request->dono_id),
             'from' => 'dlabteamsd@gmail.com',
@@ -20,13 +23,18 @@ class MailController extends Controller
             'subject' => 'Nova Requisicao',
             'nome' => $data[0]->nome,
             'apelido' => $data[0]->apelido,
-            'url' =>  'https://attendance.saudigitus.org/verSoOuVerEresponderRequisicao/'
+            'url' =>  'http://localhost:3000/login?casa_id=' . $request->casa_id . '&inq_id=' . $request->inquilino
         ];
 
-        if ($this->sendEmail($email_data) == 1) {
-            return response(['sucesso' => 'Requisicao enviada!']);
+
+        if ($saveRequest == 2) {
+            if ($this->sendEmail($email_data) == 1) {
+                return response(['sucesso' => 'Requisicao enviada!']);
+            } else {
+                return response(['erro' => 'Erro inesperado']);
+            }
         } else {
-            return response(['erro' => 'Erro inesperado']);
+            return response(['sucesso' => 'Requisicao enviada!']);
         }
     }
 

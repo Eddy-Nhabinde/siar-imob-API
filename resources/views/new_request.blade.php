@@ -146,6 +146,9 @@
                                 O {{ $nome }} {{ $apelido }} com o contacto 844090867 pede para arrendar o
                                 apartamento X do bairro X
                             </p>
+                            <p style="margin-top: 10px;">
+                                Siga o link {{ $url }} para responder a requisicao
+                            </p>
                         </td>
                     </tr>
                     <tr>
