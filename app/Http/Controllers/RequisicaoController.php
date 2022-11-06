@@ -36,15 +36,39 @@ class RequisicaoController extends Controller
 
     function getRequets(Request $request)
     {
+        $allRequest = 0;
         try {
-            $allRequest = DB::table('requisicaos')
-                ->join('propriedades', 'propriedades.id', '=', 'requisicaos.propriedade_id')
-                ->join('pessoas', 'pessoas.user_id', '=', 'requisicaos.pessoa_id')
-                ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
-                ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
-                ->select('pessoas.nome', 'pessoas.apelido', 'propriedades.foto', 'propriedades.preco','bairros.nome as nomeBairro','tipos_de_propriedades.nome as nomeTipo')
-                ->where('id_Dono', $request->dono_id)
-                ->get();
+            if ($request->data && $request->pessoa_id == 0) {
+                $allRequest = DB::table('requisicaos')
+                    ->join('propriedades', 'propriedades.id', '=', 'requisicaos.propriedade_id')
+                    ->join('pessoas', 'pessoas.user_id', '=', 'requisicaos.pessoa_id')
+                    ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
+                    ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
+                    ->select('pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
+                    ->where('id_Dono', $request->dono_id)
+                    ->where('requisicaos.created_at', $request->data)
+                    ->get();
+            } else if ($request->pessoa_id != 0 && $request->casa_id != 0) {
+                $allRequest = DB::table('requisicaos')
+                    ->join('propriedades', 'propriedades.id', '=', 'requisicaos.propriedade_id')
+                    ->join('pessoas', 'pessoas.user_id', '=', 'requisicaos.pessoa_id')
+                    ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
+                    ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
+                    ->select('pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
+                    ->where('id_Dono', $request->dono_id)
+                    ->where('requisicaos.pessoa_id', $request->pessoa_id)
+                    ->where('requisicaos.propriedade_id', $request->casa_id)
+                    ->get();
+            } else {
+                $allRequest = DB::table('requisicaos')
+                    ->join('propriedades', 'propriedades.id', '=', 'requisicaos.propriedade_id')
+                    ->join('pessoas', 'pessoas.user_id', '=', 'requisicaos.pessoa_id')
+                    ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
+                    ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
+                    ->select('pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
+                    ->where('id_Dono', $request->dono_id)
+                    ->get();
+            }
 
             return response([$allRequest]);
         } catch (Exception $e) {
