@@ -64,6 +64,8 @@ Route::get('estados', provinDistrict::class . '@getState');
 
 Route::post('/all-requests', RequisicaoController::class . '@getRequets');
 
+Route::post('/answer-request', RequisicaoController::class . '@answer');
+
 Route::post('request-house', MailController::class . '@newRequest');
 
 Route::group(['middleware' => ['apiJWT']], function () {

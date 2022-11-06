@@ -128,7 +128,7 @@
                     <tr>
                         <td bgcolor="#ffffff" align="center" valign="top"
                             style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
-                            <h1 style="font-size: 48px; font-weight: 400; margin: 2;">Ola!</h1> <img
+                            <h1 style="font-size: 48px; font-weight: 400; margin: 2;">Saudacoes senhor/a!</h1> <img
                                 src=" https://img.icons8.com/clouds/100/000000/handshake.png" width="125"
                                 height="120" style="display: block; border: 0px;" />
                         </td>
@@ -142,16 +142,26 @@
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">
-                                O {{ $nome }} {{ $apelido }} com o contacto 844090867 pede para arrendar o
-                                apartamento X do bairro X
-                            </p>
+                            @if (isset($status))
+                                <p style="margin: 0;">
+                                    Caro {{ $nome }} {{ $apelido }}, a requisicao de uma casa feita no
+                                    bairro {{ $nomeBiarro }}
+                                    foi {{ $status }} !
+                                </p>
+                            @else
+                                <p style="margin: 0;">
+                                    O {{ $nome }} {{ $apelido }} com o contacto 844090867 pede para
+                                    arrendar
+                                    uma
+                                    casa do bairro {{ $nomeBiarro }}
+                                </p>
+                            @endif
                             <p style="margin-top: 10px;">
                                 Siga o link {{ $url }} para responder a requisicao
                             </p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr> url
                         <td bgcolor="#ffffff" align="left">
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>

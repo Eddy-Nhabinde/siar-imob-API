@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
@@ -16,6 +17,12 @@ class MailController extends Controller
         $req = new RequisicaoController();
         $saveRequest = $req->create($request->inquilino, $request->casa_id, $request->dono_id);
 
+        $NomeBairro = DB::table('propriedades')
+            ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
+            ->where('propriedades.id', $request->casa_id)
+            ->select('bairros.nome')
+            ->get();
+
         $email_data = [
             'recipient' => $Ucontroller->getEmail($request->dono_id),
             'from' => 'dlabteamsd@gmail.com',
@@ -23,6 +30,7 @@ class MailController extends Controller
             'subject' => 'Nova Requisicao',
             'nome' => $data[0]->nome,
             'apelido' => $data[0]->apelido,
+            'nomeBiarro' => $NomeBairro[0]->nome,
             'url' =>  'http://localhost:3000/login?casa_id=' . $request->casa_id . '&inq_id=' . $request->inquilino
         ];
 
@@ -38,6 +46,27 @@ class MailController extends Controller
         }
     }
 
+    function requestAnswer($data, $status)
+    {
+        $email_data = [
+            'recipient' => $data[0]->email,
+            'from' => 'dlabteamsd@gmail.com',
+            'fromname' => 'SIAR-IMOB',
+            'subject' => 'Nova Requisicao',
+            'nomeBiarro' => $data[0]->nome,
+            'nome' => $data[0]->nomeInq,
+            'apelido' => $data[0]->apelido,
+            'status' => $status,
+            'url' => ''
+        ];
+
+        if ($this->sendEmail($email_data) == 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     function sendEmail($email_data)
     {
         try {
@@ -48,7 +77,7 @@ class MailController extends Controller
             });
             return 1;
         } catch (Exception $e) {
-            return 2;
+            return 0;
         }
     }
 }
