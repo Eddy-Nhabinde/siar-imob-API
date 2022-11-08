@@ -20,13 +20,13 @@ class RequisicaoController extends Controller
             if (sizeof($myRequest) > 0) {
                 return 1;
             } else {
-                // requisicao::create([
-                //     'pessoa_id' => $user_id,
-                //     'propriedade_id' => $casa_id,
-                //     'id_Dono' => $dono_id,
-                //     'mensagem' => '',
-                //     'status' => 'Pendente'
-                // ]);
+                requisicao::create([
+                    'pessoa_id' => $user_id,
+                    'propriedade_id' => $casa_id,
+                    'id_Dono' => $dono_id,
+                    'mensagem' => '',
+                    'status' => 'Pendente'
+                ]);
             }
             return 2;
         } catch (Exception $e) {
@@ -45,7 +45,7 @@ class RequisicaoController extends Controller
                         ->join('pessoas', 'pessoas.user_id', '=', 'requisicaos.pessoa_id')
                         ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
                         ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
-                        ->select('requisicaos.status', 'requisicaos.id as reqId', 'pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
+                        ->select('requisicaos.status', 'requisicaos.id as reqId', 'pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.id as propId', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
                         ->where('pessoa_id', $request->inq_id)
                         ->where('requisicaos.created_at', '<=', $request->data)
                         ->get();
@@ -55,7 +55,7 @@ class RequisicaoController extends Controller
                         ->join('pessoas', 'pessoas.user_id', '=', 'requisicaos.pessoa_id')
                         ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
                         ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
-                        ->select('requisicaos.status', 'requisicaos.id as reqId', 'pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
+                        ->select('requisicaos.status', 'requisicaos.id as reqId', 'pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.id as propId', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
                         ->where('pessoa_id', $request->inq_id)
                         ->get();
                 }
@@ -66,7 +66,7 @@ class RequisicaoController extends Controller
                         ->join('pessoas', 'pessoas.user_id', '=', 'requisicaos.pessoa_id')
                         ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
                         ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
-                        ->select('requisicaos.status', 'requisicaos.id as reqId', 'pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
+                        ->select('requisicaos.status', 'requisicaos.id as reqId', 'pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.id as propId', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
                         ->where('id_Dono', $request->dono_id)
                         ->where('requisicaos.created_at', '<=', $request->data)
                         ->get();
@@ -76,7 +76,7 @@ class RequisicaoController extends Controller
                         ->join('pessoas', 'pessoas.user_id', '=', 'requisicaos.pessoa_id')
                         ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
                         ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
-                        ->select('requisicaos.status', 'requisicaos.id as reqId', 'pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
+                        ->select('requisicaos.status', 'requisicaos.id as reqId', 'pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.id as propId', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
                         ->where('id_Dono', $request->dono_id)
                         ->where('requisicaos.pessoa_id', $request->pessoa_id)
                         ->where('requisicaos.propriedade_id', $request->casa_id)
@@ -87,7 +87,7 @@ class RequisicaoController extends Controller
                         ->join('pessoas', 'pessoas.user_id', '=', 'requisicaos.pessoa_id')
                         ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
                         ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
-                        ->select('requisicaos.status', 'requisicaos.id as reqId', 'pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
+                        ->select('requisicaos.status', 'requisicaos.id as reqId', 'pessoas.nome', 'pessoas.contacto', 'pessoas.apelido', 'propriedades.foto', 'propriedades.id as propId', 'propriedades.preco', 'bairros.nome as nomeBairro', 'tipos_de_propriedades.nome as nomeTipo', 'requisicaos.created_at as data')
                         ->where('id_Dono', $request->dono_id)
                         ->get();
                 }

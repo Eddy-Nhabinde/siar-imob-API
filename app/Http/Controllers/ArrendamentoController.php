@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\arrendamento;
+use App\Models\requisicao;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,28 +13,28 @@ class ArrendamentoController extends Controller
 {
     function addArrendamento(Request $request)
     {
-        if ($request->data_i) {
-            $ARRENDAMENTO = new arrendamento();
+        $ARRENDAMENTO = new arrendamento();
+        try {
+            $mytime = Carbon::now();
+            $ARRENDAMENTO->propriedade_id = $request->prop_id;
+            $ARRENDAMENTO->pessoa_id = $request->inquilino_id;
+            $ARRENDAMENTO->data_inicio = $mytime->toDateTimeString();
+            $ARRENDAMENTO->duracao = $request->dura;
+            $ARRENDAMENTO->valor_pago = $request->valorPago;
+            $ARRENDAMENTO->save();
 
-            try {
-                $ARRENDAMENTO->propriedade_id = $request->prop_id;
-                $ARRENDAMENTO->pessoa_id = $request->inquilino_id;
-                $ARRENDAMENTO->data_inicio = $request->data_i;
-                $ARRENDAMENTO->duracao = $request->duracao;
-                $ARRENDAMENTO->valor_pago = $request->valor_pago;
-                $ARRENDAMENTO->save();
-
-                $ocupar = new PropriedadeController();
-                $ocupar->ocuparProp($request->prop_id, 1);
-            } catch (Exception $e) {
-                return response()->json([
-                    'response' => "Erro inesperado"
-                ], 500);
-            }
+            $ocupar = new PropriedadeController();
+            $ocupar->ocuparProp($request->prop_id, 1);
+            requisicao::where('id', $request->rId)->update(['status' => 'Completo']);
+        } catch (Exception $e) {
+            dd($e);
             return response()->json([
-                'response' => "Arrendamento feito com sucesso"
-            ], 200);
+                'response' => "Erro inesperado"
+            ], 500);
         }
+        return response()->json([
+            'response' => "Arrendamento feito com sucesso"
+        ], 200);
     }
 
     function sitView($id)
@@ -90,7 +92,7 @@ class ArrendamentoController extends Controller
                 ->join('tipos_de_propriedades', 'tipos_de_propriedades.id', '=', 'propriedades.tipos_de_propriedade_id')
                 ->join('bairros', 'bairros.id', '=', 'propriedades.bairro_id')
                 ->join('pessoas', 'pessoas.id', '=', 'arrendamentos.pessoa_id')
-                ->select('bairros.nome as nomeBairro', 'propriedades.id as propID', 'pessoas.contacto', 'pessoas.nome as nomeInq','pessoas.apelido',  'arrendamentos.duracao', 'arrendamentos.estado')
+                ->select('bairros.nome as nomeBairro', 'propriedades.id as propID', 'pessoas.contacto', 'pessoas.nome as nomeInq', 'pessoas.apelido',  'arrendamentos.duracao', 'arrendamentos.estado')
                 ->where('propriedades.dono_id', $id)
                 ->get();
         } catch (Exception $e) {
@@ -102,8 +104,3 @@ class ArrendamentoController extends Controller
         return response()->json($arrendamentos, 200);
     }
 }
-
-
-
-
-

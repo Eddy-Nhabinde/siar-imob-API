@@ -57,7 +57,7 @@ class MailController extends Controller
             'nome' => $data[0]->nomeInq,
             'apelido' => $data[0]->apelido,
             'status' => $status,
-            'url' => ''
+            // 'url' =>  'http://localhost:3000/login?casa_id=' . $request->casa_id . '&inq_id=' . $request->inquilino
         ];
 
         if ($this->sendEmail($email_data) == 1) {
