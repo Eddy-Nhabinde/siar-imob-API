@@ -12,19 +12,11 @@ class PessoaController extends Controller
 {
     function register(Request $request)
     {
-
-        $validated = $request->validate([
-            $request->email => 'email'
-        ]);
         $dateOfBirth = $request->dataNasc;
         
         if (Carbon::parse($dateOfBirth)->age < 18) {
             return response()->json([
                 'error' => 'O sistema e para maiores de 18 anos'
-            ], 409);
-        } else if (!$validated) {
-            return response()->json([
-                'error' => 'Email invalido'
             ], 409);
         } else {
             $email = DB::table('users')

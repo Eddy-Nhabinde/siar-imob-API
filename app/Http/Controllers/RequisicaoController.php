@@ -23,7 +23,7 @@ class RequisicaoController extends Controller
                 requisicao::create([
                     'pessoa_id' => $user_id,
                     'propriedade_id' => $casa_id,
-                    'id_Dono' => $dono_id,
+                    'id_Dono' => 7,
                     'mensagem' => '',
                     'status' => 'Pendente'
                 ]);
