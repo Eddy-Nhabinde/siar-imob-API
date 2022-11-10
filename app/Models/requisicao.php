@@ -12,7 +12,7 @@ class requisicao extends Model
     protected $fillable = [
         'pessoa_id',
         'propriedade_id',
-        'id_dono',
+        'id_Dono',
         'status',
         'mensagem'
     ];
