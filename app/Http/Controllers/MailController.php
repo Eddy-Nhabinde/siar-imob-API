@@ -34,7 +34,6 @@ class MailController extends Controller
             'url' =>  'http://localhost:3000/login?casa_id=' . $request->casa_id . '&inq_id=' . $request->inquilino
         ];
 
-
         if ($saveRequest == 2) {
             if ($this->sendEmail($email_data) == 1) {
                 return response(['sucesso' => 'Requisicao enviada!']);
@@ -77,6 +76,7 @@ class MailController extends Controller
             });
             return 1;
         } catch (Exception $e) {
+            dd($e);
             return 0;
         }
     }

@@ -156,12 +156,14 @@
                                     casa do bairro {{ $nomeBiarro }}
                                 </p>
                             @endif
-                            <p style="margin-top: 10px;">
-                                Siga o link {{ $url }} para responder a requisicao
-                            </p>
+                            @if (isset($url))
+                                <p style="margin-top: 10px;">
+                                    Siga o link {{ $url }} para responder a requisicao
+                                </p>
+                            @endif
                         </td>
                     </tr>
-                    <tr> url
+                    <tr>
                         <td bgcolor="#ffffff" align="left">
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
